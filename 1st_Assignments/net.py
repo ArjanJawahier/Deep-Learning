@@ -5,27 +5,34 @@ import torch.nn.functional as F
 class Net(nn.Module):
 	def __init__(self):
 		super().__init__()
-		# Make layers
-		# 1 input channel, 6 output channels, 3x3 convolution
-		self.conv1 = nn.Conv2d(1, 6, 3)
+		# Make layers 
+		self.conv1 = nn.Conv2d(1, 6, 3) # 1 input channel, 6 output channels, 3x3 convolution
 		self.conv2 = nn.Conv2d(6, 16, 3)
 
 		self.fc1 = nn.Linear(16 * 5 * 5, 120)
 		self.fc2 = nn.Linear(120, 84)
-		self.fc3 = nn.Linear(84, 10) # 10 Output classes
+		self.fc3 = nn.Linear(84, 10) 	# 10 Output classes
 
+	def forward(self, x, **kwargs):
+		"""Second argument to a function call should be the activation function.
+		We can test all standard activation functions here.
+		"""
+		if "activation_func" not in kwargs.keys():
+			print("ERROR: Specify activation function as a keyworded argument.")
+			exit(-1)
+		else:
+			activation_func = kwargs["activation_func"]
 
-	def forward(self, x):
-		x = F.relu(self.conv1(x))
+		# x = activation_func(self.conv1(x))
+		x = activation_func(self.conv1(x))
 		x = F.max_pool2d(x, (2, 2))
-		x = F.relu(self.conv2(x))
+		x = activation_func(self.conv2(x))
 		x = F.max_pool2d(x, 2) # 2 is the same as (2, 2)
 		x = x.view(-1, self.num_flat_features(x)) # Flatten the tensor so we can use the FC-layers
-		x = F.relu(self.fc1(x))
-		x = F.relu(self.fc2(x))
+		x = activation_func(self.fc1(x))
+		x = activation_func(self.fc2(x))
 		x = F.softmax(self.fc3(x), dim=1)
 		return x
-
 
 	def num_flat_features(self, x):
 		"""Calculates the number of features in data
@@ -35,13 +42,13 @@ class Net(nn.Module):
 			num *= i
 		return num
 
-	def eval(self, testset):
+	def evaluate(self, testset, activation_func):
 		"""Evaluate the net on a DataLoader testset object"""
 		with torch.no_grad():
 			correct, total = 0, 0
 			for data in testset:
 				X, y = data
-				output = self(X)
+				output = self(X, activation_func=activation_func)
 				for idx, out in enumerate(output):
 					if torch.argmax(out) == y[idx]:
 						correct += 1
