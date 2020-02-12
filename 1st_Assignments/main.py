@@ -5,6 +5,10 @@ import torch.nn.functional as F
 from torchvision import transforms, datasets
 from net import *
 
+from sklearn.metrics import confusion_matrix
+from plotcm import plot_confusion_matrix
+
+
 #### TODOLIST (we don't have to do all of these):
 ## 1) Using different optimizers such as SGD, SGD with momentum, Adam, RMSProp, etc.
 ## 2) Using different activation functions such as ReLU, ELU, Leaky ReLU, PReLU, SoftPlus, Sigmoid, etc.
@@ -57,12 +61,12 @@ for activation_func in activation_funcs:
 		# Output to std.out and to the output.txt file
 		output_string = f"Settings: {activation_func.__name__.rjust(11)}, {optimizer.__class__.__name__.rjust(11)}, Test accuracy: {test_acc:.4f}."
 		print(output_string)
-		preds = get_all_preds(testset)
-		stacked = torch.stack((testset.targets,preds.argmax(dim=1)),dim=1)
-		cmt = torch.zeros(100,100, dtype=torch.int64)
-		for p in stacked:
-    		tl, pl = p.tolist()
-    		cmt[tl, pl] = cmt[tl, pl] + 1
-    	print(cmt)
 		with open("output.txt", "a") as output:
 			output.write(output_string+"\n")
+
+		# create confusion matrix
+		preds = get_all_preds(testset)
+		cm = confusion_matrix(testset.targets, preds.argmax(dim=1))
+		plt.figure(figsize=(100,100))
+		plot_confusion_matrix(cm, testset.targets)
+		
