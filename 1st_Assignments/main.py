@@ -48,22 +48,21 @@ with open("output.txt", "a") as output:
 	output.write(f"The following tests were done with net: {net}.\n")
 
 lr = 0.01
-EPOCHS = 10
+EPOCHS = 5
 optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
 	for i, opt in enumerate(optimizers):
 		net = Net()
-		
+
 		if i < len(optimizers) - 1:
 			optimizer = opt(net.parameters(), lr=lr)
-			print(optimizer)
 		else:
 			optimizer = opt(net.parameters(), lr=lr, momentum=0.9)
 		
 		for epoch in range(EPOCHS):
-			print(net.conv1.weight[0])
+			# print(net.conv1.weight[0])
 			for data in trainset:
 				X, y = data 					# data is a batch
 				optimizer.zero_grad()					# Reset the gradient to zero
@@ -72,7 +71,7 @@ for activation_func in activation_funcs:
 				loss.backward()					# Backprop
 				optimizer.step()
 			print(f"Epoch: {epoch + 1}/{EPOCHS} .... Loss: {loss:.4f}")
-			print(net.conv1.weight[0])
+			# print(net.conv1.weight[0])
 
 		test_acc = net.evaluate(testset, activation_func=activation_func)
 
@@ -85,7 +84,7 @@ for activation_func in activation_funcs:
 		# create confusion matrix
 		preds = net.get_all_preds(testset, activation_func=activation_func)
 		cm = confusion_matrix(test.targets, preds.argmax(dim=1).numpy())
-		plt.figure(figsize=(20, 20))
+		plt.figure(figsize=(15,15))
 		plot_confusion_matrix(cm, classes, normalize=True)
 		plt.savefig(f"Figures/cm_{activation_func.__name__}_{optimizer.__class__.__name__}.png")
 		plt.close()

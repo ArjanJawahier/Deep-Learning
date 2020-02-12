@@ -35,7 +35,7 @@ class Net(nn.Module):
 		x = activation_func(self.fc1(x))
 		x = activation_func(self.fc2(x))
 		x = activation_func(self.fc3(x))
-		x = F.softmax(self.fc4(x), dim=1)
+		x = F.log_softmax(self.fc4(x), dim=1)
 		return x
 
 	def num_flat_features(self, x):

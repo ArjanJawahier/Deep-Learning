@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues):
     if normalize:
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("Normalized confusion matrix")
+        print("Plotting normalized confusion matrix")
     else:
-        print('Confusion matrix, without normalization')
+        print('Plotting confusion matrix, without normalization')
 
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
