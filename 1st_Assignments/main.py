@@ -13,8 +13,8 @@ from net import *
 # Using pre-trained networks, data augmentation
 
 # Download dataset if needed and convert it to a DataLoader mini-batch generator object (train / test)
-train = datasets.MNIST("Datasets", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
-test = datasets.MNIST("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
+train = datasets.CIFAR100("Datasets", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
+test = datasets.CIFAR100("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
 trainset = torch.utils.data.DataLoader(train, batch_size=64, shuffle=True) 	# Convert to Mini-batch
 testset = torch.utils.data.DataLoader(test, batch_size=64, shuffle=True)	# Convert to Mini-batch
 
