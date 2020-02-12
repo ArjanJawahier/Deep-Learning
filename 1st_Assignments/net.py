@@ -59,5 +59,18 @@ class Net(nn.Module):
 		accuracy = correct/total
 		return accuracy
 
+	def get_all_preds(self, loader):
+		with torch.no_grad():
+		    all_preds = torch.tensor([])
+		    for batch in loader:
+		        images, labels = batch
+
+		        preds = model(images)
+		        all_preds = torch.cat(
+		            (all_preds, preds)
+		            ,dim=0
+		        )
+    return all_preds
+
 	def __repr__(self):
 		return f"Net({vars(self)['_modules']})"
