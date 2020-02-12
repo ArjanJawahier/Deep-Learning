@@ -7,7 +7,8 @@ from net import *
 
 from sklearn.metrics import confusion_matrix
 from plotcm import plot_confusion_matrix
-
+import matplotlib
+import matplotlib.pyplot as plt
 
 #### TODOLIST (we don't have to do all of these):
 ## 1) Using different optimizers such as SGD, SGD with momentum, Adam, RMSProp, etc.
@@ -32,23 +33,20 @@ if torch.cuda.is_available():
 
 ## 2) Use different activation functions here. 
 # https://pytorch.org/docs/stable/nn.functional.html
-net = Net() # Net always starts with the same weights, so we can see what the influence of each activation func is
-
+net = Net()
 with open("output.txt", "a") as output:
 	output.write("\n")
 	output.write(f"The following tests were done with net: {net}.\n")
 
-lr = 0.003
+lr = 0.01
 EPOCHS = 10
-
+optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
-optimizers = 
+
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
-
-	optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 	for i, opt in enumerate(optimizers):
-		net = Net() # Define the net again
+		net = Net()
 		
 		if i < len(optimizers) - 1:
 			optimizer = opt(net.parameters(), lr=lr)
@@ -56,6 +54,7 @@ for activation_func in activation_funcs:
 			optimizer = opt(net.parameters(), lr=lr, momentum=0.9)
 		
 		for epoch in range(EPOCHS):
+			print(net.conv1.weight[0])
 			for data in trainset:
 				X, y = data 					# data is a batch
 				net.zero_grad()					# Reset the gradient to zero
@@ -64,6 +63,8 @@ for activation_func in activation_funcs:
 				loss.backward()					# Backprop
 				optimizer.step()
 			print(f"Epoch: {epoch + 1}/{EPOCHS} .... Loss: {loss:.4f}")
+			print(net.conv1.weight[0])
+
 		test_acc = net.evaluate(testset, activation_func=activation_func)
 
 		# Output to std.out and to the output.txt file
@@ -73,8 +74,10 @@ for activation_func in activation_funcs:
 			output.write(output_string+"\n")
 
 		# create confusion matrix
-		preds = get_all_preds(testset)
-		cm = confusion_matrix(testset.targets, preds.argmax(dim=1))
-		plt.figure(figsize=(100,100))
-		plot_confusion_matrix(cm, testset.targets)
-		
+		preds = net.get_all_preds(testset, activation_func=activation_func)
+
+		cm = confusion_matrix(test.targets, preds.argmax(dim=1).numpy())
+		plt.figure(figsize=(12, 12))
+		plot_confusion_matrix(cm, test.targets, normalize=True)
+		plt.savefig(f"Figures/cm_{activation_func.__name__}_{optimizer.__class__.__name__}.png")
+		plt.close()
