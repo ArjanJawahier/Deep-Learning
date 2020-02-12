@@ -8,6 +8,7 @@ from net import *
 from sklearn.metrics import confusion_matrix
 from plotcm import plot_confusion_matrix
 
+import pickle
 
 #### TODOLIST (we don't have to do all of these):
 ## 1) Using different optimizers such as SGD, SGD with momentum, Adam, RMSProp, etc.
@@ -24,6 +25,14 @@ test = datasets.CIFAR100("Datasets", train=False, download=True, transform=trans
 trainset = torch.utils.data.DataLoader(train, batch_size=64, shuffle=True) 	# Convert to Mini-batch
 testset = torch.utils.data.DataLoader(test, batch_size=64, shuffle=True)	# Convert to Mini-batch
 
+with open("./Datasets/cifar-100-python/meta", 'rb') as fo:
+	classes_dict = pickle.load(fo, encoding='bytes')
+classes = classes_dict[b'fine_label_names']
+for i,item in enumerate(classes):
+	item = item.decode("utf-8")
+	classes[i] = item
+
+
 # If CUDA is available, we will use it (GPU is much faster than CPU)
 device = torch.device("cpu")
 print(f"CUDA is available: {torch.cuda.is_available()}")
@@ -39,7 +48,6 @@ with open("output.txt", "a") as output:
 	output.write(f"The following tests were done with net: {net}.\n")
 
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
-optimizers = 
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
 	optimizers = [optim.Adam(net.parameters(), lr=0.003), optim.RMSprop(net.parameters(), lr=0.003), optim.SGD(net.parameters(), lr=0.003),
@@ -68,5 +76,5 @@ for activation_func in activation_funcs:
 		preds = get_all_preds(testset)
 		cm = confusion_matrix(testset.targets, preds.argmax(dim=1))
 		plt.figure(figsize=(100,100))
-		plot_confusion_matrix(cm, testset.targets)
+		plot_confusion_matrix(cm, classes)
 		
