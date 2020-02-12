@@ -32,18 +32,18 @@ optimizer = optim.Adam(net.parameters(), lr=0.001)
 
 ## 2) Use different activation functions here. 
 # https://pytorch.org/docs/stable/nn.functional.html
-activation_func = F.relu
-
-EPOCHS = 4
-for epoch in range(EPOCHS):
-	print(f"Epoch: {epoch + 1}/{EPOCHS}")
-	for data in trainset:
-		X, y = data 					# data is a batch
-		net.zero_grad()					# Reset the gradient to zero
-		output = net(X, activation_func=activation_func)			# Feed inputs to the net, get output, second parameter: activation func
-		loss = F.nll_loss(output, y)	# Negative log-likelihood loss
-		loss.backward()					# Backprop
-		optimizer.step()
-	print(f"Loss: {loss}")
+activation_funcs = [F.relu, F.tanh, F.hardtanh, F.leaky_relu, F.sigmoid]
+for activation_func in activation_funcs:
+	EPOCHS = 10
+	for epoch in range(EPOCHS):
+		print(f"Epoch: {epoch + 1}/{EPOCHS}")
+		for data in trainset:
+			X, y = data 					# data is a batch
+			net.zero_grad()					# Reset the gradient to zero
+			output = net(X, activation_func=activation_func)			# Feed inputs to the net, get output, second parameter: activation func
+			loss = F.nll_loss(output, y)	# Negative log-likelihood loss
+			loss.backward()					# Backprop
+			optimizer.step()
+		print(f"Loss: {loss}")
 	test_acc = net.evaluate(testset, activation_func=activation_func)
 	print(f"Test accuracy: {test_acc}")
