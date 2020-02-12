@@ -31,6 +31,7 @@ if torch.cuda.is_available():
 ## 2) Use different activation functions here. 
 # https://pytorch.org/docs/stable/nn.functional.html
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
+optimizers = 
 for activation_func in activation_funcs:
 	# Net is defined in net.py
 	net = Net() # Net always starts with the same weights, so we can see what the influence of each activation func is
@@ -50,3 +51,12 @@ for activation_func in activation_funcs:
 		print(f"Loss: {loss}")
 	test_acc = net.evaluate(testset, activation_func=activation_func)
 	print(f"Test accuracy: {test_acc}")
+	preds = get_all_preds(testset)
+	stacked = torch.stack((testset.targets,preds.argmax(dim=1)),dim=1)
+	cmt = torch.zeros(100,100, dtype=torch.int64)
+	for p in stacked:
+    	tl, pl = p.tolist()
+    	cmt[tl, pl] = cmt[tl, pl] + 1
+    print(cmt)
+
+
