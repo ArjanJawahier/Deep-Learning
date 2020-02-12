@@ -8,12 +8,12 @@ class Net(nn.Module):
 		torch.manual_seed(0) # Reproduction purposes (Always generate the same initial weights)
 
 		# Make layers 
-		self.conv1 = nn.Conv2d(1, 6, 3) # 1 input channel, 6 output channels, 3x3 convolution
+		self.conv1 = nn.Conv2d(3, 6, 3) # 3 input channel, 6 output channels, 3x3 convolution
 		self.conv2 = nn.Conv2d(6, 16, 3)
 
-		self.fc1 = nn.Linear(16 * 5 * 5, 120)
+		self.fc1 = nn.Linear(16 * 6 * 6, 120)
 		self.fc2 = nn.Linear(120, 84)
-		self.fc3 = nn.Linear(84, 10) 	# 10 Output classes
+		self.fc3 = nn.Linear(84, 100) 	# 100 Output classes
 
 	def forward(self, x, **kwargs):
 		"""Second argument to a function call should be the activation function.
@@ -71,3 +71,6 @@ class Net(nn.Module):
 		            ,dim=0
 		        )
     return all_preds
+
+	def __repr__(self):
+		return f"Net({vars(self)['_modules']})"
