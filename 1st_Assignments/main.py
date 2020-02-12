@@ -10,6 +10,8 @@ from plotcm import plot_confusion_matrix
 import matplotlib
 import matplotlib.pyplot as plt
 
+import pickle
+
 #### TODOLIST (we don't have to do all of these):
 ## 1) Using different optimizers such as SGD, SGD with momentum, Adam, RMSProp, etc.
 ## 2) Using different activation functions such as ReLU, ELU, Leaky ReLU, PReLU, SoftPlus, Sigmoid, etc.
@@ -24,6 +26,14 @@ train = datasets.CIFAR100("Datasets", train=True, download=True, transform=trans
 test = datasets.CIFAR100("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
 trainset = torch.utils.data.DataLoader(train, batch_size=64, shuffle=True) 	# Convert to Mini-batch
 testset = torch.utils.data.DataLoader(test, batch_size=64, shuffle=True)	# Convert to Mini-batch
+
+with open("./Datasets/cifar-100-python/meta", 'rb') as fo:
+	classes_dict = pickle.load(fo, encoding='bytes')
+classes = classes_dict[b'fine_label_names']
+for i,item in enumerate(classes):
+	item = item.decode("utf-8")
+	classes[i] = item
+
 
 # If CUDA is available, we will use it (GPU is much faster than CPU)
 device = torch.device("cpu")
@@ -42,7 +52,6 @@ lr = 0.01
 EPOCHS = 10
 optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
-
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
 	for i, opt in enumerate(optimizers):
