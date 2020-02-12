@@ -47,14 +47,22 @@ with open("output.txt", "a") as output:
 	output.write("\n")
 	output.write(f"The following tests were done with net: {net}.\n")
 
+lr = 0.003
+EPOCHS = 10
+
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
-	optimizers = [optim.Adam(net.parameters(), lr=0.003), optim.RMSprop(net.parameters(), lr=0.003), optim.SGD(net.parameters(), lr=0.003),
-				  optim.SGD(net.parameters(), lr=0.003, momentum=0.9)]
-	for optimizer in optimizers:
+
+	optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
+	for i, opt in enumerate(optimizers):
 		net = Net() # Define the net again
-		EPOCHS = 1
+		
+		if i < len(optimizers) - 1:
+			optimizer = opt(net.parameters(), lr=lr)
+		else:
+			optimizer = opt(net.parameters(), lr=lr, momentum=0.9)
+		
 		for epoch in range(EPOCHS):
 			for data in trainset:
 				X, y = data 					# data is a batch
