@@ -12,6 +12,8 @@ from net import *
 # Using dropout, batch normalization, weight decay, etc.
 # Using pre-trained networks, data augmentation
 
+torch.manual_seed(0) # Reproduction purposes
+
 # Download dataset if needed and convert it to a DataLoader mini-batch generator object (train / test)
 train = datasets.MNIST("Datasets", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
 test = datasets.MNIST("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
@@ -24,17 +26,18 @@ print(f"CUDA is available: {torch.cuda.is_available()}")
 if torch.cuda.is_available():
 	device = torch.device("cuda")
 
-# Net is defined in net.py
-net = Net()
 
-## 1) Use different optimizers here
-optimizer = optim.Adam(net.parameters(), lr=0.001)
 
 ## 2) Use different activation functions here. 
 # https://pytorch.org/docs/stable/nn.functional.html
-activation_funcs = [F.relu, F.tanh, F.hardtanh, F.leaky_relu, F.sigmoid]
+activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
 for activation_func in activation_funcs:
-	EPOCHS = 10
+	# Net is defined in net.py
+	net = Net() # Net always starts with the same weights, so we can see what the influence of each activation func is
+
+	## 1) Use different optimizers here
+	optimizer = optim.Adam(net.parameters(), lr=0.003)
+	EPOCHS = 5
 	for epoch in range(EPOCHS):
 		print(f"Epoch: {epoch + 1}/{EPOCHS}")
 		for data in trainset:
