@@ -34,7 +34,6 @@ for i,item in enumerate(classes):
 	item = item.decode("utf-8")
 	classes[i] = item
 
-
 # If CUDA is available, we will use it (GPU is much faster than CPU)
 device = torch.device("cpu")
 print(f"CUDA is available: {torch.cuda.is_available()}")
@@ -59,6 +58,7 @@ for activation_func in activation_funcs:
 		
 		if i < len(optimizers) - 1:
 			optimizer = opt(net.parameters(), lr=lr)
+			print(optimizer)
 		else:
 			optimizer = opt(net.parameters(), lr=lr, momentum=0.9)
 		
@@ -66,7 +66,7 @@ for activation_func in activation_funcs:
 			print(net.conv1.weight[0])
 			for data in trainset:
 				X, y = data 					# data is a batch
-				net.zero_grad()					# Reset the gradient to zero
+				optimizer.zero_grad()					# Reset the gradient to zero
 				output = net(X, activation_func=activation_func)			# Feed inputs to the net, get output, second parameter: activation func
 				loss = F.nll_loss(output, y)	# Negative log-likelihood loss
 				loss.backward()					# Backprop
@@ -84,9 +84,8 @@ for activation_func in activation_funcs:
 
 		# create confusion matrix
 		preds = net.get_all_preds(testset, activation_func=activation_func)
-
 		cm = confusion_matrix(test.targets, preds.argmax(dim=1).numpy())
-		plt.figure(figsize=(12, 12))
-		plot_confusion_matrix(cm, test.targets, normalize=True)
+		plt.figure(figsize=(20, 20))
+		plot_confusion_matrix(cm, classes, normalize=True)
 		plt.savefig(f"Figures/cm_{activation_func.__name__}_{optimizer.__class__.__name__}.png")
 		plt.close()
