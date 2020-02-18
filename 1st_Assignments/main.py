@@ -49,7 +49,7 @@ with open("output.txt", "a") as output:
 	output.write(f"The following tests were done with net: {net}.\n")
 
 lr = 0.01
-EPOCHS = 10
+EPOCHS = 50
 optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
 for activation_func in activation_funcs:
@@ -90,3 +90,4 @@ for activation_func in activation_funcs:
 		plot_confusion_matrix(cm, test.targets, normalize=True)
 		plt.savefig(f"Figures/cm_{activation_func.__name__}_{optimizer.__class__.__name__}.png")
 		plt.close()
+		exit()
