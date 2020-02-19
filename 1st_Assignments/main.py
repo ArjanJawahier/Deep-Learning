@@ -12,24 +12,47 @@ import matplotlib.pyplot as plt
 
 import pickle
 
-#### TODOLIST (we don't have to do all of these):
+def perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func):
+	net.train() # Tells the net to go into training mode
+	for epoch in range(EPOCHS):
+		for data in trainset:
+			X, y = data 					# data is a batch
+			optimizer.zero_grad()			# Reset the gradient to zero
+			output = net(X, activation_func=activation_func)			# Feed inputs to the net, get output, second parameter: activation func
+			loss = F.nll_loss(output, y)	# Negative log-likelihood loss
+			loss.backward()					# Backprop
+			optimizer.step()
+		train_acc = net.evaluate(trainset, activation_func = activation_func)
+		print(f"Epoch: {epoch + 1}/{EPOCHS} .... Loss: {loss:.4f}, Train accuracy: {train_acc}")
+
+	test_acc = net.evaluate(testset, activation_func=activation_func)
+	return test_acc
+
+def create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, prefix=""):
+	# create confusion matrix
+	preds = net.get_all_preds(testset, activation_func=activation_func)
+	cm = confusion_matrix(test.targets, preds.argmax(dim=1).numpy())
+	plt.figure(figsize=(8,8))
+	plot_confusion_matrix(cm, classes, normalize=True)
+	plt.savefig(f"Figures/{prefix}_cm_{activation_func.__name__}_{optimizer.__class__.__name__}_momentum_{momentum}.png")
+	plt.close()
+
 ## 1) Using different optimizers such as SGD, SGD with momentum, Adam, RMSProp, etc.
 ## 2) Using different activation functions such as ReLU, ELU, Leaky ReLU, PReLU, SoftPlus, Sigmoid, etc.
-# Comparison of Deep architectures such as AlexNet, VGG, Inception V-3, ResNet, etc.
-# Using dropout, batch normalization, weight decay, etc.
-# Using pre-trained networks, data augmentation
+## 3) Using dropout, batch normalization, weight decay, etc.
 
 torch.manual_seed(0) # Reproduction purposes
 
 # Download dataset if needed and convert it to a DataLoader mini-batch generator object (train / test)
-train = datasets.CIFAR100("Datasets", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
-test = datasets.CIFAR100("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
-trainset = torch.utils.data.DataLoader(train, batch_size=64, shuffle=True) 	# Convert to Mini-batch
-testset = torch.utils.data.DataLoader(test, batch_size=64, shuffle=True)	# Convert to Mini-batch
+train = datasets.CIFAR10("Datasets", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
+test = datasets.CIFAR10("Datasets", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
+trainset = torch.utils.data.DataLoader(train, batch_size=64, shuffle=True) 	# Convert to Mini-batch generator
+testset = torch.utils.data.DataLoader(test, batch_size=64, shuffle=True)	# Convert to Mini-batch generator
 
-with open("./Datasets/cifar-100-python/meta", 'rb') as fo:
+with open("./Datasets/cifar-10-batches-py/batches.meta", 'rb') as fo:
 	classes_dict = pickle.load(fo, encoding='bytes')
-classes = classes_dict[b'fine_label_names']
+
+classes = list(classes_dict.values())[1]
 for i,item in enumerate(classes):
 	item = item.decode("utf-8")
 	classes[i] = item
@@ -47,34 +70,30 @@ with open("output.txt", "a") as output:
 	output.write("\n")
 	output.write(f"The following tests were done with net: {net}.\n")
 
-lr = 0.01
+lr = 0.003
 
-EPOCHS = 5
+EPOCHS = 1
 optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
+
+###########################################################################################################
+## PHASE 1
+highest_test_acc = 0.0
 for activation_func in activation_funcs:
 	## 1) Use different optimizers here
-	for i, opt in enumerate(optimizers):
+	for optimizer_index, opt in enumerate(optimizers):
 		net = Net()
-
-		if i < len(optimizers) - 1:
-			optimizer = opt(net.parameters(), lr=lr)
+		if optimizer_index != 3:
+			momentum = 0
+			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr)
 		else:
-			optimizer = opt(net.parameters(), lr=lr, momentum=0.9)
+			momentum = 0.9
+			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, momentum=momentum)
 		
-		for epoch in range(EPOCHS):
-			# print(net.conv1.weight[0])
-			for data in trainset:
-				X, y = data 					# data is a batch
-				optimizer.zero_grad()					# Reset the gradient to zero
-				output = net(X, activation_func=activation_func)			# Feed inputs to the net, get output, second parameter: activation func
-				loss = F.nll_loss(output, y)	# Negative log-likelihood loss
-				loss.backward()					# Backprop
-				optimizer.step()
-			print(f"Epoch: {epoch + 1}/{EPOCHS} .... Loss: {loss:.4f}")
-			# print(net.conv1.weight[0])
-
-		test_acc = net.evaluate(testset, activation_func=activation_func)
+		test_acc = perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func)
+		if test_acc > highest_test_acc:
+			highest_test_acc = test_acc
+			best_combo = (activation_func, optimizer_index)
 
 		# Output to std.out and to the output.txt file
 		output_string = f"Settings: {activation_func.__name__.rjust(11)}, {optimizer.__class__.__name__.rjust(11)}, Test accuracy: {test_acc:.4f}."
@@ -82,11 +101,60 @@ for activation_func in activation_funcs:
 		with open("output.txt", "a") as output:
 			output.write(output_string+"\n")
 
-		# create confusion matrix
-		preds = net.get_all_preds(testset, activation_func=activation_func)
-		cm = confusion_matrix(test.targets, preds.argmax(dim=1).numpy())
-		plt.figure(figsize=(15,15))
-		plot_confusion_matrix(cm, classes, normalize=True)
-		plt.savefig(f"Figures/cm_{activation_func.__name__}_{optimizer.__class__.__name__}.png")
-		plt.close()
-		exit()
+		create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, "1st_phase")
+
+print(f"The best combo of activation function and optimizer is: {best_combo}, "
+ 	  f"because they got the highest test accuracy of: {highest_test_acc}")
+# Do stuff with the best combo
+# Start using the same net but with regularization methods
+# Such as dropout, batch normalization and weight decay
+activation_func, optimizer_index = best_combo
+
+###########################################################################################################
+## PHASE 2
+highest_test_acc_phase_2 = 0
+for weight_decay in [0.01, 0.1, 0.15]:
+	net = Net()
+	if optimizer_index != 3:
+		momentum = 0
+		optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, weight_decay=weight_decay)
+	else:
+		momentum = 0.9
+		optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, weight_decay=weight_decay, momentum=momentum)
+
+	test_acc = perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func)
+	if test_acc > highest_test_acc_phase_2:
+		highest_test_acc_phase_2 = test_acc
+		best_weight_decay = weight_decay
+
+	create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, f"2nd_phase_wd_{weight_decay}")
+
+print(f"The best weight decay was {best_weight_decay}, which yielded a test acc of: {highest_test_acc_phase_2}.")
+if highest_test_acc_phase_2 > highest_test_acc:
+	print(f"This is an improvement over the previous highest test acc: {highest_test_acc}.")
+else:
+	print(f"This is NOT an improvement over the previous highest test acc: {highest_test_acc}.")
+###########################################################################################################
+## PHASE 3
+highest_test_acc_phase_3 = 0
+for i in [0, 1]:
+	net = Net(dropout=True) # THIS NET SHOULD HAVE DROPOUT
+	if optimizer_index != 3:
+		momentum = 0
+		optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, weight_decay=i*best_weight_decay)
+	else:
+		momentum = 0.9
+		optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, weight_decay=i*best_weight_decay, momentum=momentum)
+
+	test_acc = perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func)
+	if i == 0:
+		test_acc_without_weight_decay = test_acc
+		create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, "3rd_phase")
+	else:
+		test_acc_with_weight_decay = test_acc
+		create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, "3rd_phase_wd")
+
+print(f"Highest test acc after phase 1: {highest_test_acc}")
+print(f"Highest test acc after phase 2: {highest_test_acc_phase_2}")
+print(f"Test acc after phase 3 without weight decay: {test_acc_without_weight_decay}")
+print(f"Test acc after phase 3 with weight decay: {test_acc_with_weight_decay}")

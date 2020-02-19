@@ -1,0 +1,105 @@
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 18, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(18, 54, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(54, 162, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=648, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=100, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 18, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(18, 54, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(54, 162, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=648, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=100, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.4652.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 18, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(18, 54, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(54, 162, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=648, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=100, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 18, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(18, 54, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(54, 162, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=4050, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=100, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.4300.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('conv4', Conv2d(24, 48, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=4050, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('conv4', Conv2d(24, 48, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=4050, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=4050, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=96, out_features=120, bias=True)), ('fc2', Linear(in_features=120, out_features=84, bias=True)), ('fc3', Linear(in_features=84, out_features=84, bias=True)), ('fc4', Linear(in_features=84, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.1000.
+Settings:        relu,     RMSprop, Test accuracy: 0.1000.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=96, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.3829.
+Settings:        relu,     RMSprop, Test accuracy: 0.1000.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=256, bias=True)), ('fc2', Linear(in_features=256, out_features=256, bias=True)), ('fc3', Linear(in_features=256, out_features=128, bias=True)), ('fc4', Linear(in_features=128, out_features=64, bias=True)), ('fc5', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.1000.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.4308.
+Settings:        relu,     RMSprop, Test accuracy: 0.1000.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.5455.
+Settings:        relu,     RMSprop, Test accuracy: 0.4312.
+Settings:        relu,         SGD, Test accuracy: 0.0973.
+Settings:        relu,         SGD, Test accuracy: 0.5008.
+Settings:        tanh,        Adam, Test accuracy: 0.5907.
+Settings:        tanh,     RMSprop, Test accuracy: 0.5061.
+Settings:        tanh,         SGD, Test accuracy: 0.2627.
+Settings:        tanh,         SGD, Test accuracy: 0.6256.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.3632.
+Settings:        relu,     RMSprop, Test accuracy: 0.3133.
+Settings:        relu,         SGD, Test accuracy: 0.1000.
+Settings:        relu,         SGD, Test accuracy: 0.1000.
+Settings:        tanh,        Adam, Test accuracy: 0.4718.
+Settings:        tanh,     RMSprop, Test accuracy: 0.3239.
+Settings:        tanh,         SGD, Test accuracy: 0.1000.
+Settings:        tanh,         SGD, Test accuracy: 0.1931.
+Settings:    hardtanh,        Adam, Test accuracy: 0.4733.
+Settings:    hardtanh,     RMSprop, Test accuracy: 0.1000.
+Settings:    hardtanh,         SGD, Test accuracy: 0.1000.
+Settings:    hardtanh,         SGD, Test accuracy: 0.2023.
+Settings:  leaky_relu,        Adam, Test accuracy: 0.4165.
+Settings:  leaky_relu,     RMSprop, Test accuracy: 0.3373.
+Settings:  leaky_relu,         SGD, Test accuracy: 0.1000.
+Settings:  leaky_relu,         SGD, Test accuracy: 0.1000.
+Settings:     sigmoid,        Adam, Test accuracy: 0.1563.
+Settings:     sigmoid,     RMSprop, Test accuracy: 0.1000.
+Settings:     sigmoid,         SGD, Test accuracy: 0.1000.
+Settings:     sigmoid,         SGD, Test accuracy: 0.1000.
+
+The following tests were done with net: Net(OrderedDict([('conv1', Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))), ('conv2', Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))), ('conv3', Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))), ('dropout_02', Dropout(p=0.2, inplace=False)), ('fc1', Linear(in_features=384, out_features=80, bias=True)), ('dropout_05', Dropout(p=0.5, inplace=False)), ('fc2', Linear(in_features=80, out_features=80, bias=True)), ('fc3', Linear(in_features=80, out_features=64, bias=True)), ('fc4', Linear(in_features=64, out_features=10, bias=True))])).
+Settings:        relu,        Adam, Test accuracy: 0.3632.
+Settings:        relu,     RMSprop, Test accuracy: 0.3133.
+Settings:        relu,         SGD, Test accuracy: 0.1000.
+Settings:        relu,         SGD, Test accuracy: 0.1000.
+Settings:        tanh,        Adam, Test accuracy: 0.4718.
+Settings:        tanh,     RMSprop, Test accuracy: 0.3239.
+Settings:        tanh,         SGD, Test accuracy: 0.1000.
+Settings:        tanh,         SGD, Test accuracy: 0.1931.
+Settings:    hardtanh,        Adam, Test accuracy: 0.4733.
+Settings:    hardtanh,     RMSprop, Test accuracy: 0.1000.
+Settings:    hardtanh,         SGD, Test accuracy: 0.1000.
+Settings:    hardtanh,         SGD, Test accuracy: 0.2023.
+Settings:  leaky_relu,        Adam, Test accuracy: 0.4165.
+Settings:  leaky_relu,     RMSprop, Test accuracy: 0.3373.
+Settings:  leaky_relu,         SGD, Test accuracy: 0.1000.
+Settings:  leaky_relu,         SGD, Test accuracy: 0.1000.
+Settings:     sigmoid,        Adam, Test accuracy: 0.1563.
+Settings:     sigmoid,     RMSprop, Test accuracy: 0.1000.
+Settings:     sigmoid,         SGD, Test accuracy: 0.1000.
+Settings:     sigmoid,         SGD, Test accuracy: 0.1000.
