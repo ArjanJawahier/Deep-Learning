@@ -10,12 +10,12 @@ class Net(nn.Module):
         self.dropout = dropout
 
         # Make layers 
-        self.conv1 = nn.Conv2d(3, 6, 3) # 3 input channel, 6 output channels, 3x3 convolution
-        self.conv2 = nn.Conv2d(6, 12, 3)
-        self.conv3 = nn.Conv2d(12, 24, 3)
+        self.conv1 = nn.Conv2d(3, 16, 3) # 3 input channels, 16 output channels, 3x3 convolution
+        self.conv2 = nn.Conv2d(16, 32, 3)
+        self.conv3 = nn.Conv2d(32, 32, 3)
 
         self.dropout_02 = nn.Dropout(p=0.2)
-        self.fc1 = nn.Linear(384, 80)
+        self.fc1 = nn.Linear(512, 80)
         self.dropout_05 = nn.Dropout(p=0.5)
         self.fc2 = nn.Linear(80, 80)
         self.fc3 = nn.Linear(80, 64)

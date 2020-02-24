@@ -2,5 +2,8 @@
 */MNIST
 */Datasets
 
+# Figures
+*/Figures/*
+
 # pycache
 */__pycache__
