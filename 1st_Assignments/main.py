@@ -111,7 +111,7 @@ activation_func, optimizer_index = torch.tanh, 3
 ###########################################################################################################
 ## PHASE 2
 highest_test_acc_phase_2 = 0
-for weight_decay in np.arange(0.0001, 0.011, 0.0003):
+for weight_decay in np.arange(0.0001, 0.0002, 0.0003):
 	net = Net()
 	if optimizer_index != 3:
 		momentum = 0
@@ -129,10 +129,15 @@ for weight_decay in np.arange(0.0001, 0.011, 0.0003):
 	create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, f"2nd_phase_wd_{weight_decay}")
 
 print(f"The best weight decay was {best_weight_decay}, which yielded a test acc of: {highest_test_acc_phase_2}.")
-if highest_test_acc_phase_2 > highest_test_acc:
-	print(f"This is an improvement over the previous highest test acc: {highest_test_acc}.")
-else:
-	print(f"This is NOT an improvement over the previous highest test acc: {highest_test_acc}.")
+try:
+	if highest_test_acc_phase_2 > highest_test_acc:
+		print(f"This is an improvement over the previous highest test acc: {highest_test_acc}.")
+	else:
+		print(f"This is NOT an improvement over the previous highest test acc: {highest_test_acc}.")
+except NameError:
+	# This just means that phase 1 was commented out
+	print("Phase 1 was skipped")
+
 ###########################################################################################################
 ## PHASE 3
 highest_test_acc_phase_3 = 0
