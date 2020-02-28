@@ -73,45 +73,45 @@ EPOCHS = 15
 optimizers = [optim.Adam, optim.RMSprop, optim.SGD, optim.SGD]
 activation_funcs = [F.relu, torch.tanh, F.hardtanh, F.leaky_relu, torch.sigmoid]
 
-# ###########################################################################################################
-# ## PHASE 1
-# highest_test_acc = 0.0
-# for activation_func in activation_funcs:
-# 	## 1) Use different optimizers here
-# 	for optimizer_index, opt in enumerate(optimizers):
-# 		net = Net()
-# 		if optimizer_index != 3:
-# 			momentum = 0
-# 			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr)
-# 		else:
-# 			momentum = 0.9
-# 			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, momentum=momentum)
+###########################################################################################################
+## PHASE 1
+highest_test_acc = 0.0
+for activation_func in activation_funcs:
+	## 1) Use different optimizers here
+	for optimizer_index, opt in enumerate(optimizers):
+		net = Net()
+		if optimizer_index != 3:
+			momentum = 0
+			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr)
+		else:
+			momentum = 0.9
+			optimizer = optimizers[optimizer_index](net.parameters(), lr=lr, momentum=momentum)
 		
-# 		test_acc = perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func)
-# 		if test_acc > highest_test_acc:
-# 			highest_test_acc = test_acc
-# 			best_combo = (activation_func, optimizer_index)
+		test_acc = perform_epochs(EPOCHS, trainset, testset, optimizer, net, activation_func)
+		if test_acc > highest_test_acc:
+			highest_test_acc = test_acc
+			best_combo = (activation_func, optimizer_index)
 
-# 		# Output to std.out and to the output.txt file
-# 		output_string = f"Settings: {activation_func.__name__.rjust(11)}, {optimizer.__class__.__name__.rjust(11)}, Test accuracy: {test_acc:.4f}."
-# 		print(output_string)
-# 		with open("output.txt", "a") as output:
-# 			output.write(output_string+"\n")
+		# Output to std.out and to the output.txt file
+		output_string = f"Settings: {activation_func.__name__.rjust(11)}, {optimizer.__class__.__name__.rjust(11)}, Test accuracy: {test_acc:.4f}."
+		print(output_string)
+		with open("output.txt", "a") as output:
+			output.write(output_string+"\n")
 
-# 		create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, "1st_phase")
+		create_confusion_matrix(testset, activation_func, test, classes, optimizer, momentum, "1st_phase")
 
-# print(f"The best combo of activation function and optimizer is: {best_combo}, "
-#  	  f"because they got the highest test accuracy of: {highest_test_acc}")
-# # Do stuff with the best combo
-# # Start using the same net but with regularization methods
-# # Such as dropout, batch normalization and weight decay
-# activation_func, optimizer_index = best_combo
+print(f"The best combo of activation function and optimizer is: {best_combo}, "
+ 	  f"because they got the highest test accuracy of: {highest_test_acc}")
+# Do stuff with the best combo
+# Start using the same net but with regularization methods
+# Such as dropout, batch normalization and weight decay
+activation_func, optimizer_index = best_combo
 
 activation_func, optimizer_index = torch.tanh, 3
 ###########################################################################################################
 ## PHASE 2
 highest_test_acc_phase_2 = 0
-for weight_decay in np.arange(0.0001, 0.0002, 0.0003):
+for weight_decay in [0.0001, 0.0002, 0.0003, 0.0004, 0.0007, 0.001, 0.01, 0.015]:
 	net = Net()
 	if optimizer_index != 3:
 		momentum = 0
