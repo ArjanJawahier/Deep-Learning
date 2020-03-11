@@ -49,7 +49,7 @@ workers = 2
 batch_size = 128
 # Spatial size of training images. All images will be resized to this
 #   size using a transformer.
-image_size = 128
+image_size = 64
 # Number of channels in the training images. For color images this is 3
 nc = 3
 # Size of z latent vector (i.e. size of generator input)
@@ -59,7 +59,7 @@ ngf = 64
 # Size of feature maps in discriminator
 ndf = 64
 # Number of training epochs
-num_epochs = 100
+num_epochs = 50
 # Learning rate for optimizers
 lr = 0.0002
 # Beta1 hyperparam for Adam optimizers
@@ -125,7 +125,7 @@ criterion = nn.BCELoss()
 
 # Create batch of latent vectors that we will use to visualize
 #  the progression of the generator
-fixed_noise = torch.randn(64, nz, 1, 1, device=device)
+fixed_noise = torch.randn(image_size, nz, 1, 1, device=device)
 
 # Establish convention for real and fake labels during training
 real_label = 1
@@ -202,7 +202,7 @@ for epoch in range(num_epochs):
         optimizerG.step()
 
         # Output training stats
-        if i % 50 == 0:
+        if i % 25 == 0:
             print('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f'
                   % (epoch, num_epochs, i, len(dataloader),
                      errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
@@ -231,5 +231,5 @@ plt.show()
 fig = plt.figure(figsize=(8,8))
 plt.axis("off")
 ims = [[plt.imshow(np.transpose(i,(1,2,0)), animated=True)] for i in img_list]
-ani = animation.ArtistAnimation(fig, ims, interval=1000, repeat_delay=1000, blit=True)
+ani = animation.ArtistAnimation(fig, ims, interval=500, repeat_delay=500, blit=True)
 plt.show()
